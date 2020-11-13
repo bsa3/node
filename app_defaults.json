@@ -3,7 +3,6 @@
     "app_id": 42,
     "app_keyName": "app.pem",
     "name": "test",
-    "user_home": "/Users/ec2-user",
     "git_scm_url" : "https://github.com/bsa3/node",
     "logfile": "sample.log"
  }
