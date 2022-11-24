@@ -1,5 +1,5 @@
 //elbv2.js
-// https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/ELBv2.html#describeTargetHealth-property
+// https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/ELBv2.html
 
 const AWS = require('aws-sdk');
 const configStateDefault = { "AWS": {
@@ -12,6 +12,7 @@ const configStateDefault = { "AWS": {
   }
 }
 
+// https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/ELBv2.html#describeTargetHealth-property
 module.exports.describeTargetHealth = (configState=configStateDefault) => {
 // node -p -e 'require("./scripts/elbv2.js").describeTargetHealth("TargetGroupArn");'
 //usage: var TargetHealthPromise = require("./elbv2.js").describeTargetHealth("TargetGroupArn");
