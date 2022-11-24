@@ -1,22 +1,26 @@
 //elbv2.js
-const AWS = require('aws-sdk');
-const configStateDefault = { "AWS": {
-    config: {region: "us-east-1"}
-  }
-}
 // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/ELBv2.html#describeTargetHealth-property
 
-module.exports.describeTargetHealth = (TargetGroupArn, configState=configStateDefault) => {
+const AWS = require('aws-sdk');
+const configStateDefault = { "AWS": {
+    config: {region: "us-east-1"},
+    elbv2: {
+      params: {
+        TargetGroupArn: "" 
+      }
+    }
+  }
+}
+
+module.exports.describeTargetHealth = (configState=configStateDefault) => {
 // node -p -e 'require("./scripts/elbv2.js").describeTargetHealth("TargetGroupArn");'
 //usage: var TargetHealthPromise = require("./elbv2.js").describeTargetHealth("TargetGroupArn");
 //node -p -e 'require("./scripts/elbv2.js").describeTargetHealth("TargetGroupArn").then((TargetHealthData) => {console.log(TargetHealthData)});'
-  console.log("elbv2.describeTargetHealth( \"" + TargetGroupArn + "\", " + configState + " )")
+  console.log("elbv2.describeTargetHealth( " + JSON.stringify(configState, null, 2)  + " )")
   AWS.config.update(configState.AWS.config);
   var elbv2 = new AWS.ELBv2();
-
-  var params = {
-  TargetGroupArn: TargetGroupArn
-  };
+  var params = configState.AWS.elbv2.params
+  
   data = elbv2.describeTargetHealth(params, function(err, data) {
     if (err) console.log(err, err.stack); // an error occurred
     //else     console.log(data);           // successful response
