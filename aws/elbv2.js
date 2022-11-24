@@ -6,7 +6,7 @@ const configStateDefault = { "AWS": {
     config: {region: "us-east-1"},
     elbv2: {
       params: {
-        TargetGroupArn: "" 
+        TargetGroupArn: "arn:aws:elasticloadbalancing:us-east-1:123456789012:targetgroup/my-targets/73e2d6bc24d8a067" 
       }
     }
   }
