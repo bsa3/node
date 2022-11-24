@@ -17,7 +17,7 @@ const configStateDefault = { "AWS": {
 module.exports.detachInstances = (configState=configStateDefault) => {
 // node -p -e 'require("./scripts/autoscaling.js").detachInstances({ "AWS": { config: {region: "us-east-1"}, autoscaling: { params: { AutoScalingGroupName: "my-auto-scaling-group", InstanceIds: [ "i-93633f9b" ], ShouldDecrementDesiredCapacity: false } } }});'
 // usage: var detachInstancesPromise = require("./autoscaling.js").detachInstances(configState);
-// node -p -e 'require("./scripts/autoscaling.js").detachInstances("configState).then((data) => {console.log(data)});'
+// node -p -e 'require("./scripts/autoscaling.js").detachInstances("configState).then((res) => {console.log(res)});'
   console.log("autoscaling.detachInstances( " + JSON.stringify(configState, null, 2)  + " )");
   AWS.config.update(configState.AWS.config);
   var autoscaling = new AWS.AutoScaling();
