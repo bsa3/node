@@ -14,7 +14,7 @@ const configStateDefault = { "AWS": {
 
 // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/ELBv2.html#describeTargetHealth-property
 module.exports.describeTargetHealth = (configState=configStateDefault) => {
-// node -p -e 'require("./scripts/elbv2.js").describeTargetHealth({ "AWS": {    config: {region: "us-east-1"},    elbv2: {      params: {        TargetGroupArn: "arn:aws:elasticloadbalancing:us-east-1:123456789012:targetgroup/my-targets/73e2d6bc24d8a067"       }    }  }});'
+// node -p -e 'require("./scripts/elbv2.js").describeTargetHealth({ "AWS": { config: {region: "us-east-1"}, elbv2: { params: { TargetGroupArn: "arn:aws:elasticloadbalancing:us-east-1:123456789012:targetgroup/my-targets/73e2d6bc24d8a067" } } }});'
 // usage: var TargetHealthPromise = require("./elbv2.js").describeTargetHealth(configState);
 // node -p -e 'require("./scripts/elbv2.js").describeTargetHealth(configState).then((TargetHealthData) => {console.log(TargetHealthData)});'
   console.log("elbv2.describeTargetHealth( " + JSON.stringify(configState, null, 2)  + " )")
