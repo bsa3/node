@@ -14,9 +14,9 @@ const configStateDefault = { "AWS": {
 
 // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/ELBv2.html#describeTargetHealth-property
 module.exports.describeTargetHealth = (configState=configStateDefault) => {
-// node -p -e 'require("./scripts/elbv2.js").describeTargetHealth("TargetGroupArn");'
-//usage: var TargetHealthPromise = require("./elbv2.js").describeTargetHealth("TargetGroupArn");
-//node -p -e 'require("./scripts/elbv2.js").describeTargetHealth("TargetGroupArn").then((TargetHealthData) => {console.log(TargetHealthData)});'
+// node -p -e 'require("./scripts/elbv2.js").describeTargetHealth("configState);'
+//usage: var TargetHealthPromise = require("./elbv2.js").describeTargetHealth(configState);
+//node -p -e 'require("./scripts/elbv2.js").describeTargetHealth(configState).then((TargetHealthData) => {console.log(TargetHealthData)});'
   console.log("elbv2.describeTargetHealth( " + JSON.stringify(configState, null, 2)  + " )")
   AWS.config.update(configState.AWS.config);
   var elbv2 = new AWS.ELBv2();
