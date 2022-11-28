@@ -1,6 +1,6 @@
 
 // jshint esversion: 8
-// ../node_modules/jshint/bin/jshint ./webRequest.js
+// ../node_modules/jshint/bin/jshint ./httpsRequest.js
 
 var postDataDefault = JSON.stringify({"ALERT":"test"});
 
