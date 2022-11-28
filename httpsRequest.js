@@ -5,7 +5,7 @@
 var postDataDefault = JSON.stringify({"ALERT":"test"});
 
 const configStateDefault = {
-    "request": {
+    "post": {
         options: {
             hostname: 'hooks.slack.com',
             port: 443,
@@ -21,13 +21,14 @@ const configStateDefault = {
 
 module.exports.post = (postData=postDataDefault, configState=configStateDefault) => {
     // node -p -e 'require("./scripts/httpsRequest.js").post();'
-    var options = configState.request.options;
+    // require("./httpsRequest.js").post(postData, configState);
+    configState.post.options.headers['Content-Length'] = postData.length;
+    var options = configState.post.options;
     const https = require('https');
     
     var req = https.request(options, (res) => {
     console.log('statusCode:', res.statusCode);
     console.log('headers:', res.headers);
-
         res.on('data', (d) => {
             process.stdout.write(d);
             });
