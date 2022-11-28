@@ -20,7 +20,7 @@ const configStateDefault = {
 };
 
 module.exports.post = (postData=postDataDefault, configState=configStateDefault) => {
-    // node -p -e 'require("./scripts/webRequest.js").post();'
+    // node -p -e 'require("./scripts/httpsRequest.js").post();'
     var options = configState.request.options;
     const https = require('https');
     
