@@ -14,16 +14,32 @@ const configStateDefault = { "AWS": {
   }
 };
 
+// termination not immediate, will drain from elb first
+module.exports.terminateInstanceInAutoScalingGroup = (configState=configStateDefault) => {
+// node -p -e 'var x=require("./scripts/autoscaling.js").terminateInstanceInAutoScalingGroup({ "AWS": { config: {region: "us-west-2"}, autoscaling: { params: { InstanceId: "i-123456789" , ShouldDecrementDesiredCapacity: true } } }}); console.log(x)'
+// usage: require("./autoscaling.js").terminateInstanceInAutoScalingGroup(configState);
+  console.log("autoscaling.terminateInstanceInAutoScalingGroup( " + JSON.stringify(configState, null, 2)  + " )");
+  AWS.config.update(configState.AWS.config);
+  var autoscaling = new AWS.AutoScaling();
+  var params = configState.AWS.autoscaling.params;
+  var data = autoscaling.terminateInstanceInAutoScalingGroup(params, function(err, data) {
+    if (err) console.log(err, err.stack); // an error occurred
+    else     console.log(data);           // successful response
+    return data;
+  });
+  return data;
+};
+
+
 module.exports.detachInstances = (configState=configStateDefault) => {
 // node -p -e 'require("./scripts/autoscaling.js").detachInstances({ "AWS": { config: {region: "us-east-1"}, autoscaling: { params: { AutoScalingGroupName: "my-auto-scaling-group", InstanceIds: [ "i-93633f9b" ], ShouldDecrementDesiredCapacity: false } } }});'
 // usage: var detachInstancesPromise = require("./autoscaling.js").detachInstances(configState);
-// node -p -e 'require("./scripts/autoscaling.js").detachInstances("configState).then((res) => {console.log(res)});'
   console.log("autoscaling.detachInstances( " + JSON.stringify(configState, null, 2)  + " )");
   AWS.config.update(configState.AWS.config);
   var autoscaling = new AWS.AutoScaling();
   var params = configState.AWS.autoscaling.params;
 
-  autoscaling.detachInstances(params, function(err, data) {
+  return autoscaling.detachInstances(params, function(err, data) {
     if (err) console.log(err, err.stack);   // an error occurred
     else     console.log(data);           // successful response
     return data;
@@ -36,7 +52,6 @@ module.exports.detachInstances = (configState=configStateDefault) => {
   //   console.error(err, err.stack);
   //   callback(err);
   // });
-  return data;
 };
      /*
     data = {
