@@ -1,7 +1,7 @@
-//ec2.js
+// ec2.js
 // jshint esversion: 8
 // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/EC2.html
-const AWS = require('aws-sdk');
+
 const configStateDefault = { "AWS": {
     config: {region: "us-east-1"},
     ec2: {
@@ -9,7 +9,7 @@ const configStateDefault = { "AWS": {
         Filters: [
             {
            Name: "resource-id", 
-           Values: [ "i-1234567890abcdef8"]
+           Values: [ "i-1234567890abcdef8" ]
           }
          ]
       }
@@ -19,10 +19,11 @@ const configStateDefault = { "AWS": {
 
 // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/EC2.html#describeTags-property
 module.exports.describeTags = async (configState=configStateDefault) => {
-// node -p -e 'require("./scripts/ec2.js").describeTags({ "AWS": { config: {region: "us-east-1"}, ec2: { params: { Filters: [ {  Name: "resource-id", Values: [ "i-1234567890abcdef8"] } ] } }  }});'
+// node -p -e 'require("./scripts/ec2.js").describeTags({ "AWS": { config: {region: "us-west-2"}, ec2: { params: { Filters: [ {  Name: "resource-id", Values: [ "i-034ee992261eeb5c3"] } ] } }  }});'
 // usage: var describeTagsPromise = require("./ec2.js").describeTags(configState);
 // node -p -e 'require("./scripts/ec2.js").describeTags("configState).then((data) => {console.log(data)});'
   console.log("ec2.describeTags( " + JSON.stringify(configState, null, 2)  + " )");
+  const AWS = require('aws-sdk');
   AWS.config.update(configState.AWS.config);
   var ec2 = new AWS.EC2();
   var params = configState.AWS.ec2.params;
@@ -56,13 +57,14 @@ module.exports.describeTags = async (configState=configStateDefault) => {
    
 module.exports.AutoScalingGroupName = async (configState=configStateDefault) => {
 // node -p -e 'require("./scripts/ec2.js").AutoScalingGroupName({ "AWS": { config: {region: "us-east-1"}, ec2: { params: { Filters: [ {  Name: "resource-id", Values: [ "i-03d9327bdd247f9b2"] } ] } }  }}).then(AutoScalingGroupName => {console.log("AutoScalingGroupName:"+JSON.stringify(AutoScalingGroupName, null, 2) )})'
-    var AutoScalingGroupName = exports.describeTags( configState ).then(data => {
+  console.log("AutoScalingGroupName(" + JSON.stringify(configState, null, 2)) + ")";
+  var AutoScalingGroupName = exports.describeTags( configState ).then(data => {
         //console.log("data:" + JSON.stringify(data, null, 2))
         configState.autoscalingObject = data.Tags.find(o => o.Key === 'aws:autoscaling:groupName');
         //console.log(configState.autoscalingObject.Value);
         return configState.autoscalingObject.Value;
-    }).then(AutoScalingGroupName => { return AutoScalingGroupName; });
-    return AutoScalingGroupName;
+  }).then(AutoScalingGroupName => { return AutoScalingGroupName; });
+  return AutoScalingGroupName;
 };
 
 return 0;
